@@ -38,6 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const debtAmount = hasDebt ? parseKc(document.getElementById("debt_ammont").value) : 0;
         const saved = parseKc(document.getElementById("deposit").value);
         const years = Number(document.getElementById("range").value);
+        const range = Number(document.getElementById("range").value);
         const interestRate = Number(document.getElementById("interest").value) / 100;
 
         const depositRatio = age < 36 ? 0.1 : 0.2;
@@ -90,13 +91,24 @@ document.addEventListener("DOMContentLoaded", () => {
             ul.classList.add("opacity-100", "translate-y-0");
         }, 20);
     });
+
+    // FIXED DARK/LIGHT THEME TOGGLE
     const toggle = document.getElementById("darkToggle");
-    let isDarkMode = false;
     
-    function toggleTheme() {
-        isDarkMode = !isDarkMode;
-        
-        if (isDarkMode) {
+    // Check if user has a saved preference, otherwise use system preference
+    let isDarkMode = localStorage.getItem('darkMode');
+    
+    if (isDarkMode === null) {
+        // No saved preference, use system preference
+        isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    } else {
+        // Convert stored string to boolean
+        isDarkMode = isDarkMode === 'true';
+    }
+    
+    // Apply the theme
+    function applyTheme(dark) {
+        if (dark) {
             document.documentElement.classList.add('dark');
             toggle.textContent = "☀️";
         } else {
@@ -105,38 +117,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
     
-    // Initialize theme based on system preference
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    if (prefersDark) {
-        isDarkMode = true;
-        document.documentElement.classList.add('dark');
-        toggle.textContent = "☀️";
-    } else {
-        isDarkMode = false;
-        document.documentElement.classList.remove('dark');
-        toggle.textContent = "🌙";
+    // Initialize theme
+    applyTheme(isDarkMode);
+    
+    // Toggle function
+    function toggleTheme() {
+        isDarkMode = !isDarkMode;
+        applyTheme(isDarkMode);
+        // Save preference to localStorage
+        localStorage.setItem('darkMode', isDarkMode.toString());
     }
     
     toggle.addEventListener("click", toggleTheme);
-});
-
-
-// function updateCounter() {
-//     fetch("counter.php")
-//         .then(res => res.text())
-//         .then(count => {
-//             document.getElementById("counter").textContent = `Formulář byl vyplněn ${count}×`;
-//         });
-// }
-
-// document.querySelector("form").addEventListener("submit", function (e) {
-//     e.preventDefault();
     
-//     // ... výpočty ...
-
-//     updateCounter();
-// });
-
-
-// Dark mode toggle - Fixed version
-            
+    // Listen for system theme changes (optional)
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener('change', (e) => {
+        // Only apply system preference if user hasn't manually set a preference
+        if (localStorage.getItem('darkMode') === null) {
+            isDarkMode = e.matches;
+            applyTheme(isDarkMode);
+        }
+    });
+});

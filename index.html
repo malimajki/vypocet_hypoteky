@@ -6,10 +6,12 @@
         <title>HypotekaOffline</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <link rel="icon" type="image/png" sizes="32x32" href="src/favicon.png">
+        <link href="src/output.css" rel="stylesheet">
+        <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
-    <body class="dark:text-white flex flex-col bg-gradient-to-br from-[#fdfbfb] via-[#ebedee] to-[#c9d6ff] dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-[#1a1a1a] md:max-w-6xl mx-auto md:p-10 font-serif h-screen">
-        <div class="dark:bg-gray-800 dark:text-gray-100 bg-white/90 backdrop-blur-sm md:rounded-3xl shadow-2xl md:p-10 p-2 md:ring-1 ring-[#aaa] relative">
+    <body class="flex flex-col bg-gradient-to-br from-[#fdfbfb] via-[#ebedee] to-[#c9d6ff] dark:from-gray-900 dark:via-gray-800 dark:to-gray-700 text-[#1a1a1a] dark:text-white md:max-w-6xl mx-auto md:p-10 font-serif h-screen">
+        <div class="bg-white/90 backdrop-blur-sm dark:bg-gray-800 dark:text-gray-100 md:rounded-3xl shadow-2xl md:p-10 p-2 md:ring-1 ring-[#aaa] relative">
             <button id="darkToggle"
                 class="absolute top-4 right-4 z-50 bg-white text-gray-800 border border-gray-300 rounded-full w-10 h-10 flex items-center justify-center shadow-md transition hover:scale-105 dark:bg-gray-800 dark:text-white dark:border-gray-600">
                 🌙
@@ -22,7 +24,33 @@
                 <div class="md:w-1/2">
                     <form class="flex flex-col space-y-1.5" action="">
                         <div class="sm:col-span-4 mt-2">
-                            <label for="age" class="block text-sm/6 font-semibold text-gray-900 dark:text-gray-400">Věk</label>
+                            <div class="flex flex-row space-x-2 mb-2">
+                                <label for="age" class="block text-sm/6 font-semibold text-gray-900 dark:text-gray-400">Věk</label>
+                                <div class="flex items-center space-x-2">
+                                    <div x-data="{ showInfo: false }" class="relative">
+                                        <!-- Info icon - clickable on mobile, hoverable on desktop -->
+                                        <button 
+                                            @click="showInfo = !showInfo"
+                                            @mouseenter="showInfo = true" 
+                                            @mouseleave="showInfo = false"
+                                            class="w-5 h-5 bg-blue-400 hover:bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                            :class="{ 'md:hover:bg-blue-500': true }"
+                                        >
+                                            i
+                                        </button>
+                                        <div 
+                                            x-show="showInfo"
+                                            @click.away="showInfo = false"
+                                            x-transition:enter="transition ease-out duration-200"
+                                            x-transition:enter-start="opacity-0 transform scale-95"
+                                            x-transition:enter-end="opacity-100 transform scale-100"
+                                            class="absolute bottom-full left-0 transform -translate-x-0 mb-2 w-96 px-3 py-2 bg-gray-800 dark:bg-gray-400 text-white dark:text-gray-800 text-sm rounded z-20"
+                                        >
+                                            Pokud je vám méně než 30 let, teoreticky stačí 10 % vlastních prostředků. Jinak je potřeba 20 %.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:focus-within:outline-indigo-500 dark:bg-gray-700 dark:outline-gray-600">
                                 <input type="number" id="age" name="age" min="18" max="60" required class="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500" 
                                 placeholder="18-60 let" />
@@ -30,7 +58,33 @@
                         </div>
 
                         <div class="sm:col-span-4 mt-2">
-                            <label for="income" class="block text-sm/6 font-semibold text-gray-900 dark:text-gray-400">Příjem</label>
+                            <div class="flex flex-row space-x-2 mb-2">
+                                <label for="age" class="block text-sm/6 font-semibold text-gray-900 dark:text-gray-400">Příjem</label>
+                                <div class="flex items-center space-x-2">
+                                    <div x-data="{ showInfo: false }" class="relative">
+                                        <!-- Info icon - clickable on mobile, hoverable on desktop -->
+                                        <button 
+                                            @click="showInfo = !showInfo"
+                                            @mouseenter="showInfo = true" 
+                                            @mouseleave="showInfo = false"
+                                            class="w-5 h-5 bg-blue-400 hover:bg-blue-500 text-white rounded-full flex items-center justify-center text-xs font-bold focus:outline-none focus:ring-2 focus:ring-blue-300"
+                                            :class="{ 'md:hover:bg-blue-500': true }"
+                                        >
+                                            i
+                                        </button>
+                                        <div 
+                                            x-show="showInfo"
+                                            @click.away="showInfo = false"
+                                            x-transition:enter="transition ease-out duration-200"
+                                            x-transition:enter-start="opacity-0 transform scale-95"
+                                            x-transition:enter-end="opacity-100 transform scale-100"
+                                            class="absolute bottom-full left-0 transform -translate-x-0 mb-2 w-96 px-3 py-2 bg-gray-800 dark:bg-gray-400 text-white dark:text-gray-800 text-sm rounded z-20"
+                                        >
+                                            Maximální měsíční splátka hypotéky může být maximálně 50% celkových čistých příjmů (tzn. příjmi - výdaje (úvěry, hypotéky, kontokorenty...)).
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1 outline-gray-300 focus-within:outline-2 focus-within:-outline-offset-2 focus-within:outline-indigo-600 dark:focus-within:outline-indigo-500 dark:bg-gray-700 dark:outline-gray-600">
                                 <input type="text" id="income" name="income" required class="currency-input block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6 dark:bg-gray-700 dark:text-gray-100 dark:placeholder:text-gray-500" 
                                 placeholder="váš příjem v Kč" />
@@ -106,13 +160,13 @@
                         </button>
                     </form>
                 </div>
-                <div class="flex flex-col md:ml-16 mt-2">                    
+                <div class="flex flex-col md:ml-16 mt-2">
                     <div class="mt-4">
                         <ul class="space-y-2 opacity-0 translate-y-2 transition-all duration-500 ease-in-out">
-                            <li class="dark:text-gray-400">Maximální výše hypotéky: <span class="text-lg font-semibold dark:text-white"></span>.</li>
-                            <li class="dark:text-gray-400">Celková zaplacená částka: <span class="text-lg font-semibold dark:text-white"></span>,</li>
-                            <li class="dark:text-gray-400">Úroky celkem: <span class="text-lg font-semibold dark:text-white"></span>.</li>
-                            <li class="dark:text-gray-400">Měsíční splátka: <span class="text-lg font-semibold dark:text-white"></span>.</li>
+                            <li class="text-gray-700 dark:text-gray-400">Maximální výše hypotéky: <span class="text-lg font-semibold text-gray-900 dark:text-white"></span>.</li>
+                            <li class="text-gray-700 dark:text-gray-400">Celková zaplacená částka: <span class="text-lg font-semibold text-gray-900 dark:text-white"></span>,</li>
+                            <li class="text-gray-700 dark:text-gray-400">Úroky celkem: <span class="text-lg font-semibold text-gray-900 dark:text-white"></span>.</li>
+                            <li class="text-gray-700 dark:text-gray-400">Měsíční splátka: <span class="text-lg font-semibold text-gray-900 dark:text-white"></span>.</li>
                         </ul>
                     </div>
                 </div>
@@ -122,7 +176,6 @@
             &copy; 2025 Michal Šanda. All rights reserved.
             <a class="mt-2 max-w-fit hover:text-gray-700 dark:hover:text-gray-300" target="_blank" href="https://sandamichal.cz/">www.sandamichal.cz</a>
         </footer>
-        
-        <script src="./src/script.js"></script>
+    <script src="src/script.js" type="text/javascript"> </script>            
     </body>
 </html>
