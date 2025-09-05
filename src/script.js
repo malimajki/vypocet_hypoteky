@@ -84,7 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 <li class="dark:text-gray-400">Úroky celkem: <span class="dark:text-white text-lg font-semibold">${formatKc(interestPaid)}</span>.</li>
                 <li class="dark:text-gray-400">Měsíční splátka: <span class="dark:text-white text-lg font-semibold">${formatKc(monthlyPayment)}</span>.</li>
                 ${limitMessage ? `<li class="text-indigo-800 dark:text-indigo-500">${limitMessage}</li>` : ""}
-                <li class="text-xs font-italic dark:text-gray-400">(Hodnoty jsou pouze orientační a v závislosti na bance se mohou lišit.)</li>
+                <li class="dark:text-gray-400">Aplikace nepočíta s RPSN. <span class="text-xs dark:text-gray-400">(tzn. Výpočet obsahuje pouze úrokou sazbu a nepočítá s poplatky, pojištění hypotéky atd.)</span></li>
+                <li class="text-xs dark:text-gray-400">(Hodnoty jsou pouze orientační a v závislosti na bance se mohou lišit.)</li>
             `;
         setTimeout(() => {
             ul.classList.remove("opacity-0", "translate-y-2");
